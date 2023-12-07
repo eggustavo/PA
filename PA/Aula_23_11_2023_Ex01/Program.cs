@@ -1,11 +1,29 @@
 ﻿using System;
-using System.Threading;
 
 namespace Aula_23_11_2023_Ex01
 {
     class Program
-    {
+    {        
         static void Main(string[] args)
+        {
+            try
+            {
+                Votacao();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ocorreu o seguinte problema: {ex.Message}");
+                Console.Write("Pressione uma tecla para continuar");
+                Console.ReadLine();
+                Votacao();
+            }
+            finally
+            {
+                Console.WriteLine("Sempre é executado");
+            }
+        }
+
+        static void Votacao()
         {
             int voto = -1;
             int totalVotoCand01 = 0,
@@ -27,6 +45,7 @@ namespace Aula_23_11_2023_Ex01
                 Console.WriteLine("4 - Candidato 04");
                 Console.WriteLine("5 - Nulo");
                 Console.WriteLine("6 - Branco");
+                Console.WriteLine("0 - Encerra");
                 Console.WriteLine("----------------------");
                 Console.Write("Digite a Opção Desejada: ");
                 voto = int.Parse(Console.ReadLine());
@@ -63,15 +82,6 @@ namespace Aula_23_11_2023_Ex01
 
             totalVotos = totalVotoCand01 + totalVotoCand02 + totalVotoCand03 + totalVotoCand04 + totalVotoNulos + totalVotoBrancos;
 
-            Console.WriteLine($"TB: {totalVotos}");
-
-            decimal x = totalVotoNulos / totalVotos;
-            Console.WriteLine($"X: {x}");
-
-
-            Thread.Sleep(2000);
-
-
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
@@ -83,8 +93,21 @@ namespace Aula_23_11_2023_Ex01
             Console.WriteLine($"Total de Votos Candiato 04: {totalVotoCand04}");
             Console.WriteLine($"Total de Votos Nulos: {totalVotoNulos}");
             Console.WriteLine($"Total de Votos Branos: {totalVotoBrancos}");
-            Console.WriteLine($"% de Nulos: {(totalVotoNulos / totalVotos) * 100}");
-            Console.WriteLine($"% de Brancos: {(totalVotoBrancos / totalVotos) * 100}");
+            Console.WriteLine($"% de Nulos: {((Convert.ToDecimal(totalVotoNulos) / Convert.ToDecimal(totalVotos)) * 100):0.00}");
+            Console.WriteLine($"% de Brancos: {((Convert.ToDecimal(totalVotoBrancos) / Convert.ToDecimal(totalVotos)) * 100):0.00}");
+
+            decimal totalVotoNulosDecimal = Convert.ToDecimal(totalVotoNulos);
+            decimal totalVotoBrancosDecimal = Convert.ToDecimal(totalVotoBrancos);
+            decimal totalVotosDecimal = Convert.ToDecimal(totalVotos);
+
+            decimal percVotoNulos = (totalVotoNulosDecimal / totalVotosDecimal) * 100;
+            decimal percVotoBrancos = (totalVotoBrancosDecimal / totalVotosDecimal) * 100;
+
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine($"% de Nulos: {percVotoNulos:0.00}");
+            Console.WriteLine($"% de Brancos: {percVotoBrancos:0.00}");
+
         }
     }
 }
